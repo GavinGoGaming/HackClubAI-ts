@@ -2,8 +2,12 @@
 A typescript implementation of the [HackClub AI](https://ai.hackclub.com/) api with built in JSON tooling support, web search, and prompt generation.
 
 ## Installing
-Install via npm or pnpm directly from GitHub:
+Install via npm or pnpm from npmjs or directly from GitHub:
 ```bash
+# latest release
+npm install hackclubai-ts
+
+# latest push / nightly
 npm install github:gavingogaming/hackclubai-ts
 ```
 
