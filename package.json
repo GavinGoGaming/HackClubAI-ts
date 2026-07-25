@@ -1,5 +1,5 @@
 {
-  "name": "hackclubai",
+  "name": "hackclubai-ts",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
@@ -7,18 +7,17 @@
     "build": "tsc",
     "start": "node dist/index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["ai", "hackclub", "typescript"],
+  "author": "GavinGoGaming",
   "license": "GPL-2.0",
   "type": "module",
-  "description": "",
+  "description": "TypeScript implementation of Hack Club AI",
   "devDependencies": {
     "@types/node": "^26.1.1",
     "tsx": "^4.23.1",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "dotenv": "^16.3.1"
   },
   "dependencies": {
-    "dotenv": "^17.4.2",
-    "eventsource": "^4.1.0"
   }
 }

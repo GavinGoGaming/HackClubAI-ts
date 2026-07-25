@@ -1,13 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-const AI_API_KEY = process.env.HACKCLUB_AI;
-if(!AI_API_KEY) {
-    throw new Error("HACKCLUB_AI environment variable is not set.");
-}
-
-const CONFIG: Config = {
-    AI_API_KEY,
+const DEFAULTS = {
     BASE_URL: `https://ai.hackclub.com`,
     ROUTES: {
         chat: `/proxy/v1/chat/completions`,
@@ -25,11 +16,17 @@ const CONFIG: Config = {
     }
 };
 
+export default function createConfig(AI_API_KEY: string, BASE_URL?: string | undefined): Config {
+    return {
+        ...DEFAULTS,
+        AI_API_KEY,
+        BASE_URL: BASE_URL || DEFAULTS.BASE_URL
+    };
+}
+
 export type RouteType = "chat" | "responses" | "embeddings" | "embeddings_models" | "models" | "stats" | "moderations" | "ocr" | "exa_search" | "exa_findSimilar" | "exa_answer" | "exa_contents";
 export interface Config {
     AI_API_KEY: string;
     BASE_URL: string;
     ROUTES: Record<RouteType, string>;
 }
-
-export default CONFIG;

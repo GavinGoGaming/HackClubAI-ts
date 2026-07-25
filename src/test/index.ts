@@ -1,10 +1,17 @@
-import CONFIG from "../config.js";
+import createConfig from "../config.js";
 import HCAIRequestor from "../requests.js";
 import verityDialogue from "./resources/verity.json" with { type: "json" };
 import HCAITooling, { DEFAULT_TOOLS } from "../tooling.js";
 import PROMPTING from "../prompting.js";
+import dotenv from "dotenv";
+dotenv.config();
 
-const requestor = new HCAIRequestor(CONFIG);
+if(!process.env.HACKCLUB_AI) {
+    throw new Error("HACKCLUB_AI missing in .env!");
+}
+
+const config = createConfig(process.env.HACKCLUB_AI);
+const requestor = new HCAIRequestor(config);
 const tooling = new HCAITooling({
     'get_current_biome': {
         name: 'Get Current Biome',
@@ -16,7 +23,8 @@ const tooling = new HCAITooling({
     'web_search': {
         name: 'Web Search',
         description: 'Search the web for information.',
-        execute: DEFAULT_TOOLS.web_search
+        hasQuery: true,
+        execute: DEFAULT_TOOLS.web_search(config)
     }
 });
 
@@ -25,7 +33,7 @@ ${verityDialogue.map(d => `- ${d}`).join("\n")}`;
 const GENERIC = `${PROMPTING.currentDateTime()} You are a helpful AI assistant. You will answer the user's questions to the best of your ability. If you do not know the answer, do not make up an answer.`;
 
 async function call(query: string, previousReplies?: any) {
-    const data = await requestor.request(CONFIG.ROUTES.chat, {
+    const data = await requestor.request(config.ROUTES.chat, {
         model: 'nvidia/nemotron-3-ultra-550b-a55b:free',
         messages: [
             await tooling.getSystemMessage(GENERIC, previousReplies),
