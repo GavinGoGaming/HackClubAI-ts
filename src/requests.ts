@@ -1,4 +1,3 @@
-import { EventSource } from "eventsource";
 import type { Config } from "./config.js";
 
 export default class HCAIRequestor {
